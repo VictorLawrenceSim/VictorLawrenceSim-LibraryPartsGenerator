@@ -1,0 +1,107 @@
+Sub Blower_Write()
+
+    Dim masterFile          As String
+    Dim newFile             As String
+    Dim writeTo             As String
+    Dim tDocument           As String
+    Dim replacedDocument    As String
+    Dim modelNo             As Integer
+    Dim keywords(29)        As String
+    Dim dataPoints          As String
+    Dim columnNo            As Integer
+    
+    'Activates sheet 4 which holds file locations
+    Sheet4.Activate
+    
+    'Opens Blower Master xml file which holds keywords to replace as "t"parameterName
+    masterFile = Range("B1").Value & "\Blower_Master.xml"
+    newFile = FreeFile()
+    Open masterFile For Input As newFile
+    
+    'Reads in xml file line by line and stores it in tDocument
+    'tDocument saved and used as a template for all the models
+    Do Until EOF(newFile)
+        Line Input #newFile, Line
+        tDocument = tDocument & Line & vbCrLf
+    Loop
+    Close newFile
+    
+    'Replaces the date in the header to the current year which it is produced
+    tDocument = Replace(tDocument, "<!--Copyright 2017 Mentor Graphics Corporation-->", _
+                                   "<!--Copyright " & Year(Date) & " Mentor Graphics Corporation-->")
+    
+    'Reads in path name to write xml files to later
+    topPath = Range("B2").Value & "\"
+    
+
+    'Determines whether to run the macro for all models or selected models which may need changing
+    If Range("B5").Value = "All Models" Then
+        Sheet1.Activate
+    ElseIf Range("B5").Value = "Selected Models" Then
+        Sheet2.Activate
+    Else
+      MsgBox "Sheet type not found." & vbCrLf & "Please select an item from the drop down list in sheet 4.", vbCritical, "Error"
+      End
+    End If
+    
+    'Stores the list of keywords to replace in the Blower_Master.xml file
+    For n = 0 To 29
+        keywords(n) = Sheet5.Cells(n + 2, 1).Value
+    Next
+    
+    'Initialise model data starting from row no.4
+    modelNo = 4
+    
+    'Reads in all the models
+    Do While Cells(modelNo, 1).Value <> ""
+        
+        'Replace the keywords with the actual value
+        replacedDocument = replaceDocument(tDocument, keywords(), modelNo)
+        
+        'Resets dataPoints for next model
+        dataPoints = ""
+        
+        'Curve data points starting from column 45 (column AS)
+        columnNo = 45
+        
+        'Writes in x data points
+        Do While Cells(modelNo, columnNo).Value <> ""
+            'Applies indent to other lines apart from first line of curve data points (already indented)
+            If columnNo = 45 Then
+                'Adds xml line to create data points to existing string
+                dataPoints = dataPoints & "<curve_point x=""" & Cells(modelNo, columnNo).Value & """ y =""" & Cells(modelNo, columnNo + 1).Value & """/>" & vbCrLf
+            Else
+                dataPoints = dataPoints & "        <curve_point x=""" & Cells(modelNo, columnNo).Value & """ y =""" & Cells(modelNo, columnNo + 1).Value & """/>" & vbCrLf
+            End If
+            
+            'Moves pointer to next set of x and y points
+            columnNo = columnNo + 2
+        Loop
+        
+        'Replaces keyword with data points for curves
+        replacedDocument = Replace(replacedDocument, "<!--insert here-->", dataPoints)
+        
+        'Makes a new folder with the vendor's name if it doesn't already exist
+        If Len(Dir(topPath & Cells(modelNo, 1).Value, vbDirectory)) = 0 Then
+            MkDir (topPath & Cells(modelNo, 1).Value)
+            On Error Resume Next
+        End If
+        
+        'Outputs local replacedDocument into a xml file with the model no.'s name
+        newFile = FreeFile()
+        writeTo = topPath & Cells(modelNo, 1).Value & "\" & Cells(modelNo, 2).Value & ".xml"
+        Open writeTo For Output As newFile
+        Print #newFile, replacedDocument
+        Close newFile
+
+        modelNo = modelNo + 1
+    Loop
+    
+    'Outputs a message window to notify the user something has happened
+    Title = "FloSCRIPTs output successful"
+    
+    MsgBox "XML files of " & Sheet4.Range("B5").Value & " generated." & vbCrLf & _
+            "Please find new scripts in the location you have specified.", vbInformation, _
+            Title
+            
+End Sub

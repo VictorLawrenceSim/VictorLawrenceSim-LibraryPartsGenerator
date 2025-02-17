@@ -1,0 +1,49 @@
+'Creates a xml script to automatically create library folders with vendor names on in FloTHERM
+Sub Create_Libraries()
+    Sheet4.Activate
+    pathName = Range("B2").Value & "\"
+    topPath = Range("B3").Value
+        
+    Sheet3.Activate
+    startingPhrase = getHeader()
+
+    highLevelLibrary = _
+                          "    <create_library directory=""" & topPath & """ library_name=""New_Fans"">" & vbCrLf _
+                        & "        <library_parent>" & vbCrLf _
+                        & "            <library name=""Library""/>" & vbCrLf _
+                        & "        </library_parent>" & vbCrLf _
+                        & "    </create_library>"
+                        
+    modelNo = 2
+    mainPath = topPath & "\New_Fans"
+    mainBody = ""
+    
+    Do While Cells(modelNo, 1).Value <> ""
+        mainBody = mainBody _
+                            & "    <create_library directory=""" & mainPath & """ library_name=""" & Cells(modelNo, 1).Value & """> " & vbCrLf _
+                            & "        <library_parent>" & vbCrLf _
+                            & "            <library name=""Library"">" & vbCrLf _
+                            & "                <library name=""New_Fans""/>" & vbCrLf _
+                            & "            </library>" & vbCrLf _
+                            & "        </library_parent>" & vbCrLf _
+                            & "    </create_library>" & vbCrLf
+                            
+        modelNo = modelNo + 1
+    Loop
+    
+    endingPhrase = "</xml_log_file>"
+    
+    newFile = FreeFile()
+    writeTo = pathName & "Create_Libraries.xml"
+    Open writeTo For Output As newFile
+    Print #newFile, startingPhrase
+    Print #newFile, highLevelLibrary
+    Print #newFile, mainBody
+    Print #newFile, endingPhrase
+    Close newFile
+    
+    Sheet4.Activate
+    
+    MsgBox "FloSCRIPT to automatically create library folders created.", vbInformation, "Library folders FloSCRIPT"
+    
+End Sub

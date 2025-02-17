@@ -1,0 +1,18 @@
+Function replaceDocument(ByVal replacedDocument, ByVal keywords, ByVal modelNo) As String
+    'Replaces keywords (stored in sheet 5) in Master_Blower.xml with actual values
+    
+    For n = 0 To 1
+        replacedDocument = Replace(replacedDocument, keywords(n), Cells(modelNo, n + 1).Value)
+    Next
+    
+    For n = 2 To 4
+        replacedDocument = Replace(replacedDocument, keywords(n), Cells(modelNo, n + 13).Value)
+    Next
+    
+    For n = 5 To 29
+        replacedDocument = Replace(replacedDocument, keywords(n), Cells(modelNo, n + 15).Value)
+    Next
+    
+    'I would use return here but vba does not have return :'(
+    replaceDocument = replacedDocument
+End Function

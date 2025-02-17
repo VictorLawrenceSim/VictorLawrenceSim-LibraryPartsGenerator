@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml_log_file version="1.0">
+    <!--Copyright 2017 Mentor Graphics Corporation-->
+    <!--All Rights Reserved-->
+    <!--THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY-->
+    <!--INFORMATION WHICH IS THE PROPERTY OF MENTOR-->
+    <!--GRAPHICS CORPORATION OR ITS LICENSORS AND IS-->
+    <!--SUBJECT TO LICENSE TERMS.-->
+    <select_geometry>
+        <selected_geometry_name>
+            <geometry name="Root Assembly"/>
+        </selected_geometry_name>
+    </select_geometry>
+    <create_geometry geometry_type="fan">
+        <source_geometry>
+            <geometry name="Root Assembly"/>
+        </source_geometry>
+    </create_geometry>
+    <select_geometry>
+        <selected_geometry_name>
+            <geometry name="Root Assembly">
+                <geometry name="Fan" position_in_parent="0"/>
+            </geometry>
+        </selected_geometry_name>
+        <deselected_geometry_name>
+            <geometry name="Root Assembly"/>
+        </deselected_geometry_name>
+    </select_geometry>
+    <modify_geometry new_value="tname" property_name="name">
+        <geometry_name>
+            <geometry name="Root Assembly">
+                <geometry name="Fan" position_in_parent="0"/>
+            </geometry>
+        </geometry_name>
+    </modify_geometry>
+    <modify_geometry new_value="mm" property_name="constructionLengthUnit">
+        <geometry_name>
+            <geometry name="Root Assembly">
+                <geometry name="tname" position_in_parent="0"/>
+            </geometry>
+        </geometry_name>
+    </modify_geometry>
+    <modify_geometry new_value="thubDiameter" property_name="hubDiameter">
+        <geometry_name>
+            <geometry name="Root Assembly">
+                <geometry name="tname" position_in_parent="0"/>
+            </geometry>
+        </geometry_name>
+    </modify_geometry>
+    <modify_geometry new_value="touterDiameter" property_name="outerDiameter">
+        <geometry_name>
+            <geometry name="Root Assembly">
+                <geometry name="tname" position_in_parent="0"/>
+            </geometry>
+        </geometry_name>
+    </modify_geometry>
+    <modify_geometry new_value="tfanDepth" property_name="fanDepth">
+        <geometry_name>
+            <geometry name="Root Assembly">
+                <geometry name="tname" position_in_parent="0"/>
+            </geometry>
+        </geometry_name>
+    </modify_geometry>
+    <modify_geometry new_value="tderatingFactor" property_name="deratingFactor">
+        <geometry_name>
+            <geometry name="Root Assembly">
+                <geometry name="tname" position_in_parent="0"/>
+            </geometry>
+        </geometry_name>
+    </modify_geometry>
+    <modify_geometry new_value="tflowSpecification" property_name="flowSpecification">
+        <geometry_name>
+            <geometry name="Root Assembly">
+                <geometry name="tname" position_in_parent="0"/>
+            </geometry>
+        </geometry_name>
+    </modify_geometry>
+    <curve_modify_geometry property_name="fanChart" x_unit="tvolRateUnit" y_unit="tpressureUnit">
+        <geometry_name>
+            <geometry name="Root Assembly">
+                <geometry name="tname" position_in_parent="0"/>
+            </geometry>
+        </geometry_name>
+		<!--insert here-->
+    </curve_modify_geometry>
+    <modify_geometry new_value="tflowType" property_name="flowType">
+        <geometry_name>
+            <geometry name="Root Assembly">
+                <geometry name="tname" position_in_parent="0"/>
+            </geometry>
+        </geometry_name>
+    </modify_geometry>
+    <modify_geometry new_value="tswirlModel" property_name="swirlModel">
+        <geometry_name>
+            <geometry name="Root Assembly">
+                <geometry name="tname" position_in_parent="0"/>
+            </geometry>
+        </geometry_name>
+    </modify_geometry>
+    <modify_geometry new_value="tswirlDirection" property_name="swirlDirection">
+        <geometry_name>
+            <geometry name="Root Assembly">
+                <geometry name="tname" position_in_parent="0"/>
+            </geometry>
+        </geometry_name>
+    </modify_geometry>
+    <modify_geometry new_value="tangularVelocityUnit" property_name="angularVelocityUnit">
+        <geometry_name>
+            <geometry name="Root Assembly">
+                <geometry name="tname" position_in_parent="0"/>
+            </geometry>
+        </geometry_name>
+    </modify_geometry>
+    <modify_geometry new_value="tswirlSpeed" property_name="swirlSpeed">
+        <geometry_name>
+            <geometry name="Root Assembly">
+                <geometry name="tname" position_in_parent="0"/>
+            </geometry>
+        </geometry_name>
+    </modify_geometry>
+    <modify_geometry new_value="tpowerOn" property_name="powerOn">
+        <geometry_name>
+            <geometry name="Root Assembly">
+                <geometry name="tname" position_in_parent="0"/>
+            </geometry>
+        </geometry_name>
+    </modify_geometry>
+    <modify_geometry new_value="tpower" property_name="power">
+        <geometry_name>
+            <geometry name="Root Assembly">
+                <geometry name="tname" position_in_parent="0"/>
+            </geometry>
+        </geometry_name>
+    </modify_geometry>
+    <modify_geometry new_value="tfanNoise" property_name="fanNoise">
+        <geometry_name>
+            <geometry name="Root Assembly">
+                <geometry name="tname" position_in_parent="0"/>
+            </geometry>
+        </geometry_name>
+    </modify_geometry>
+    <save_to_library>
+        <library_name>
+            <library name="Library">
+                <library name="New_Fans">
+                    <library name="tvendor"/>
+                </library>
+            </library>
+        </library_name>
+        <geometry_name>
+            <geometry name="Root Assembly">
+                <geometry name="tname" position_in_parent="0"/>
+            </geometry>
+        </geometry_name>
+    </save_to_library>
+    <delete_geometry>
+        <geometry_name>
+            <geometry name="Root Assembly">
+                <geometry name="tname" position_in_parent="0"/>
+            </geometry>
+        </geometry_name>
+    </delete_geometry>
+</xml_log_file>

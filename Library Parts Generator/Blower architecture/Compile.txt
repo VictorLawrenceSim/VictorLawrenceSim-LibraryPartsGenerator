@@ -1,0 +1,83 @@
+Sub Compile()
+
+    Dim modelNo             As Integer
+    Dim singleModel         As String
+    Dim newFile             As String
+    Dim tDocument           As String
+    Dim compiledScripts     As String
+    Dim writeTo             As String
+    
+    'Obtains path name to write to
+    Sheet4.Activate
+    pathName = Range("B2").Value & "\"
+    
+    'Stores starting lines common in every FloSCRIPT
+    startDocument = getHeader()
+    
+    'Stores ending line common in every FloSCRIPT
+    endDocument = "</xml_log_file>"
+    
+    modelNo = 4
+    'Determines whether to run the macro for all models or selected models which may need changing
+    If Range("B5").Value = "All Models" Then
+        Sheet1.Activate
+    ElseIf Range("B5").Value = "Selected Models" Then
+        Sheet2.Activate
+    Else
+      MsgBox "Sheet type not found." & vbCrLf & "Please select an item from the drop down list in sheet 4.", vbCritical, "Error"
+      End
+    End If
+    
+    'Informs user processes are happening and that program is not just frozen
+    MsgBox "Your files are compiling." & vbCrLf & vbCrLf _
+            & "This may take a few seconds for large number of blowers (e.g. 50+)." & vbCrLf & vbCrLf _
+            & "It is normal for Excel to be in the not responding state during this time.", vbInformation, "Compiling, please wait..."
+    
+    'Reads in all xml files listed in the Excel spreadsheet
+    Do While Cells(modelNo, 1).Value <> ""
+        vendor = Cells(modelNo, 1).Value
+        'Compiles all the xml files corresponding to a single vendor
+        Do While Cells(modelNo, 1).Value = vendor
+            singleModel = pathName & vendor & "\" & Cells(modelNo, 2).Value & ".xml"
+            newFile = FreeFile()
+            Open singleModel For Input As newFile
+        
+            Do Until EOF(newFile)
+                Line Input #newFile, Line
+                tDocument = tDocument & Line & vbCrLf
+            Loop
+        
+            Close newFile
+            
+            'Removes the starting and ending lines common in every FloSCRIPT
+            tDocument = Replace(tDocument, startDocument, "")
+            tDocument = Replace(tDocument, endDocument, "")
+            
+            'Increments the model number by 1
+            modelNo = modelNo + 1
+        Loop
+        
+        compiledScripts = FreeFile()
+        writeTo = pathName & vendor & "\" & vendor & ".xml"
+        Open writeTo For Output As compiledScripts
+        
+        'Writes the opening phrase to the compiled xml
+        Print #compiledScripts, startDocument
+        'Writes the main body of all the xml files for single models
+        Print #compiledScripts, tDocument
+        'Writes the ending phrase to the compiled xml
+        Print #compiledScripts, endDocument
+        Close compiledScripts
+        
+        'Reset tDocument for next vendor xml files
+        tDocument = ""
+    Loop
+    
+    'Notifies the user something has happened
+    Title = "Compile successful"
+    
+    MsgBox "Single XML file to run the XML files of models located in the " & _
+            Sheet4.Range("B5").Value & " tab has been created.", vbInformation, Title
+            
+End Sub
+

@@ -1,0 +1,50 @@
+%================================================================================
+
+% Copyright 2017 Mentor Graphics Corporation 
+
+% All Rights Reserved
+
+% THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY
+% INFORMATION WHICH IS THE PROPERTY OF MENTOR
+% GRAPHICS CORPORATION OR ITS LICENSORS AND IS
+% SUBJECT TO LICENSE TERMS.
+
+%================================================================================
+%============================== RELEASE NOTES V2.0 ==============================
+
+%===== Major Improvements =======================================================
+
+1. Now able to have variable number of curve data points
+
+2. Code is now 30 times shorter, more efficient
+
+3. One main macro for all vendors, instead of individual macros for each vendor
+
+4. The xml files are now named by the model name, instead of 1, 2, 3 etc.
+
+5. Compiles all xml files for each vendor into one vendor xml file
+
+6. Better readability of Macros (if needed)
+
+%===== Minor Improvements =======================================================
+
+1. File location is now made flexible
+
+2. User receives notification when a macro has finished running
+
+3. Various data validations implemented
+
+4. Error catches implemented
+
+5. Keywords are replaced with paramater names used in FloSCRIPT
+   Makes it easier to find attribute which is being altered
+
+6. Able to generate xml files for selected models only
+
+7. Automatically creates libraries in FloTHERM® for each vendor
+
+8. Creates and groups xml files into their respective vendor
+   folders in the local directory
+
+9. Macro adapted to the version of FloTHERM the user is using
+

@@ -1,0 +1,10 @@
+Function getHeader()
+    getHeader = "<?xml version=""1.0"" encoding=""UTF-8""?>" & vbCrLf _
+                & "<xml_log_file version=""1.0"">" & vbCrLf _
+                & "    <!--Copyright " & Year(Date) & " Mentor Graphics Corporation-->" & vbCrLf _
+                & "    <!--All Rights Reserved-->" & vbCrLf _
+                & "    <!--THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY-->" & vbCrLf _
+                & "    <!--INFORMATION WHICH IS THE PROPERTY OF MENTOR-->" & vbCrLf _
+                & "    <!--GRAPHICS CORPORATION OR ITS LICENSORS AND IS-->" & vbCrLf _
+                & "    <!--SUBJECT TO LICENSE TERMS.-->"
+End Function
